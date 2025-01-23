@@ -1,0 +1,1 @@
+web: gunicorn LoudubProject.wsgi:application --log-file -
