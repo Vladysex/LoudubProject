@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../static/css/profile.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+
+        <div class="menu-item" onclick="showContent('subscription')">
+            <i class="fas fa-book"></i>
+            <span class="menu-text">Subscription</span>
+        </div>
+
+        {% if user.is_staff %}
+        <div class="menu-item" onclick="showContent('mail')">
+            <i class="fas fa-envelope"></i>
+            <span class="menu-text">Mail</span>
+        </div>
+        {% endif %}
+
+        {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}" class ='menu-link'>
+            <div class="menu-item" onclick="showContent('admin')">
+                <i class="fas fa-user-secret"></i>
+                <span class="menu-text">Admin</span>
+            </div>
+        </a>
+        {% endif %}
+
+        <div class="menu-item" onclick="showContent('work_surface')">
+            <i class="fas fa-briefcase"></i>
+            <span class="menu-text">Work Surface</span>
+        </div>
+
+        <div class="logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="menu-text">Log out</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content" id="content">
+
+            <div id="subscription-content" style="display: none;">
+                <div class="subscriptions-container">
+                    <div class="subscription-card">
+                        <h3>Basic Plan</h3>
+                        <p>Price: $9.99/month</p>
+                        <ul>
+                            <li>Access to basic features</li>
+                            <li>Email support</li>
+                            <li>200 minutes of video dubbing</li>
+                        </ul>
+                        <button class="pay-button" onclick="window.location.href='/payment/basic/'">Subscribe</button>
+                    </div>
+
+                    <div class="subscription-card">
+                        <h3>Standard Plan</h3>
+                        <p>Price: $19.99/month</p>
+                        <ul>
+                            <li>Everything in Basic Plan</li>
+                            <li>Priority email support</li>
+                            <li>500 minutes of video dubbing</li>
+                        </ul>
+                        <button class="pay-button" onclick="window.location.href='/payment/standard/'">Subscribe</button>
+                    </div>
+
+                    <div class="subscription-card">
+                        <h3>Premium Plan</h3>
+                        <p>Price: $29.99/month</p>
+                        <ul>
+                            <li>Everything in Standard Plan</li>
+                            <li>24/7 telegram-chat support</li>
+                            <li>Up to 1500 minutes of video dubbing</li>
+                        </ul>
+                        <button class="pay-button" onclick="window.location.href='/payment/premium/'">Subscribe</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div id="mail-content" style="display: none;">
+                <h2>Contact Messages</h2>
+                <ul>
+                    {% for message in messages %}
+                        <li class="message-item", id="message--{{ messages.id }}">
+                            <strong>{{ message.name }}</strong> ({{ message.email }})<br>
+                             <textarea id="message-text-{{ message.id }}">{{ message.message }}</textarea><br>
+                            <small>Sent at: {{ message.created_at }}</small>
+                            <br>
+
+                            <button class ="update-button" onclick="updateMessage({{ message.id }})">Update</button>
+
+                            <button class="delete-button" onclick="deleteMessage({{ message.id }})">Delete</button>
+                        </li>
+                    {% empty %}
+                        <p>No messages yet.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+
+           <div id="work_surface-content" style="display: none;">
+               <h2>Text-to-Speech Generator</h2>
+               <h3>SOON...</h3>
+               
+           </div>
+
+
+
+    </div>
+</div>
+
+    <script>const logoutUrl = "{% url 'log_out' %}";</script>
+    <script src="../static/js/profile.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" defer></script>
+</body>
+</html>

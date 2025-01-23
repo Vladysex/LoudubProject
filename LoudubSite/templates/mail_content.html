@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section id="main" class="container medium">
+        <header>
+            <h2>Messages</h2>
+            <p>Here are the messages sent through the contact form.</p>
+        </header>
+        <div class="box">
+            <ul>
+                {% for message in messages %}
+                    <li>
+                        <strong>{{ message.name }}</strong> ({{ message.email }})<br>
+                        <em>{{ message.subject }}</em><br>
+                        {{ message.message }}<br>
+                        <small>Sent at: {{ message.created_at }}</small>
+                    </li>
+                {% empty %}
+                    <p>No messages yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    <h2>Messages</h2>
+    <ul>
+        {% for message in messages %}
+        <li>
+            {{ message.name }} - {{ message.subject }}
+            <a href="{% url 'update_message' message.id %}">Edit</a>
+            <a href="{% url 'delete_message' message.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_message' %}">Create New Message</a>
+    </section>
+
+</body>
+</html>

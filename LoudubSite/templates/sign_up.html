@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .signup-container {
+            background: hsla(230, 71%, 56%, 1);
+            background: linear-gradient(180deg, hsla(230, 71%, 56%, 1) 0%, hsla(221, 44%, 41%, 1) 88%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 1px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            height: 50px;
+            width: 200px;
+            position: relative;
+            background-color: transparent;
+            cursor: pointer;
+            border: 2px solid #f77f77;
+            overflow: hidden;
+            border-radius: 30px;
+            color: #f77f77;
+            transition: all 0.5s ease-in-out;
+            z-index: 1;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-top: 20px;
+        }
+        .btn-custom:hover {
+            box-shadow: 1px 1px 200px #f77f77;
+            color: #fff;
+            border: none;
+        }
+        label{
+            color: white;
+        }
+
+        .text-center{
+            color: white;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type='first_name'],
+        input[type='last_name'],
+        input[type="password"],
+        input[type="confirm_password"] {
+            color: #000;
+            background-color: #fff; }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type='first_name']:focus,
+        input[type='last_name']:focus,
+        input[type="password"]:focus,
+        input[type="confirm_password"]:focus {
+            color: #000;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2 class="text-center">Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors|join:" " }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {{ form.email.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="text-danger">
+                        {{ form.first_name.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="text-danger">
+                        {{ form.last_name.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="text-danger">
+                        {{ form.password.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                {{ form.confirm_password }}
+                {% if form.confirm_password.errors %}
+                    <div class="text-danger">
+                        {{ form.confirm_password.errors|join:", " }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-custom btn-block">Sign Up</button>
+        </form>
+        <p class="text-center mt-3">
+            Already have an account? <a href="{% url 'log_in' %}" class="text-light">Log In</a>
+        </p>
+    </div>
+</body>
+</html>
