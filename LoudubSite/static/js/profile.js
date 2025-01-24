@@ -30,35 +30,6 @@ function logout() {
     window.location.href = logoutUrl;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('tts-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const text = document.getElementById('text-input').value;
-        const voiceId = document.getElementById('voice-select').value;
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        fetch('/api/text-to-speech/', {
-            method: "POST",
-            body: new URLSearchParams({text: text, voice_id: voiceId}),
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRFToken": csrfToken
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                const audioPlayer = document.getElementById('audio-player');
-                audioPlayer.src = "/" + data.audio_url;
-                audioPlayer.style.display = "block";
-            } else {
-                alert("Error: " + data.error);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
 
 function deleteMessage(messageId) {
     if (confirm("Are you sure you want to delete this message?")) {
